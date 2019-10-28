@@ -7,11 +7,12 @@ import logging.handlers
 from pygame import mixer
 from tlc import tlc5940
 import sys
+import random
 
 
 DIR="/home/pi/halloween"
 
-LOG_FILENAME = "/tmp/myservice.log"
+LOG_FILENAME = "/home/pi/halloween/jacky.log"
 LOG_LEVEL = logging.INFO  # Could be e.g. "DEBUG" or "WARNING"
 logger = logging.getLogger(__name__)
 # Set the log level to LOG_LEVEL
@@ -53,6 +54,8 @@ leds = tlc5940(blankpin = 27,
 GPIO.setmode(GPIO.BCM)
 GPIO_PIR = 4
 
+#AudioFiles = 
+
 GPIO.setup(GPIO_PIR, GPIO.IN)
 
 #p.start(0)
@@ -61,7 +64,7 @@ Read = 0
 State = 0
 
 mixer.init()
-mixer.music.load(DIR + '/laughter_04.mp3')
+#mixer.music.load(DIR + '/laughter_04.mp3')
 mixer.music.set_volume(1.0)
 
 try:
@@ -74,7 +77,7 @@ try:
     leds.write_grey_values()
     leds.pulse_clk()
 
-        logger.info("Waiting for PIR")
+    logger.info("Waiting for PIR")
     while GPIO.input(GPIO_PIR) != 0:
         time.sleep(0.1)
     logger.info("Ready...")
@@ -84,6 +87,33 @@ try:
         if Read == 1 and State == 0:
             #print "Erkannt!"
             logger.info("Sensed something")
+
+            voice = random.randint(0,4)
+            duration = 1
+            if voice == 0:
+                logger.info("audio_female_03.mp3")
+                mixer.music.load(DIR + '/audio_female_03.mp3')
+                duration = 3
+            elif voice == 1:
+                logger.info('ghost_05')
+                mixer.music.load(DIR + '/audio_ghost_05.mp3')
+                duration = 5
+            elif voice == 2:
+                logger.info('laughter_02')
+                mixer.music.load(DIR + '/audio_laughter_02.mp3')
+                duration =2
+            elif voice == 3:
+                logger.info('/audio_laughter_04.mp3')
+                mixer.music.load(DIR + '/audio_laughter_04.mp3')
+                duration = 3
+            elif voice == 4:
+                logger.info('audio_monster_05.mp3')
+                mixer.music.load(DIR + '/audio_monster_05.mp3')
+                duration = 5
+            else:
+                logger.info('else')
+                mixer.music.load(DIR + '/audio_laughter_02.mp3')
+                duration =2
             mixer.music.play()
 #			mixer.music.load('./laughter4.mp3')
             for ins in range (2000,4096,100):
@@ -94,7 +124,7 @@ try:
                 for led in range(0,16):
                     leds.set_grey(led,ins)
                 if ins > 3900:
-                    t_end = time.time() + 4
+                    t_end = time.time() + duration
                     #print t_end
                     logger.debug(t_end)
                     while time.time() < t_end:
