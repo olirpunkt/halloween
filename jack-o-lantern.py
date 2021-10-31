@@ -91,28 +91,28 @@ try:
             voice = random.randint(0,4)
             duration = 1
             if voice == 0:
-                logger.info("audio_female_03.mp3")
-                mixer.music.load(DIR + '/audio_female_03.mp3')
+                logger.info("ghost01")
+                mixer.music.load(DIR + '/audio_ghost01.mp3')
                 duration = 3
             elif voice == 1:
-                logger.info('ghost_05')
-                mixer.music.load(DIR + '/audio_ghost_05.mp3')
+                logger.info('grunt01')
+                mixer.music.load(DIR + '/audio_grunt01.mp3')
                 duration = 5
             elif voice == 2:
-                logger.info('laughter_02')
-                mixer.music.load(DIR + '/audio_laughter_02.mp3')
+                logger.info('monster01')
+                mixer.music.load(DIR + '/audio_monster01.mp3')
                 duration =2
             elif voice == 3:
-                logger.info('/audio_laughter_04.mp3')
-                mixer.music.load(DIR + '/audio_laughter_04.mp3')
+                logger.info('/scream01')
+                mixer.music.load(DIR + '/audio_scream01.mp3')
                 duration = 3
             elif voice == 4:
-                logger.info('audio_monster_05.mp3')
-                mixer.music.load(DIR + '/audio_monster_05.mp3')
+                logger.info('scream02')
+                mixer.music.load(DIR + '/audio_scream02.mp3')
                 duration = 5
             else:
                 logger.info('else')
-                mixer.music.load(DIR + '/audio_laughter_02.mp3')
+                mixer.music.load(DIR + '/audio_laughter01.mp3')
                 duration =2
             mixer.music.play()
 #			mixer.music.load('./laughter4.mp3')
@@ -129,7 +129,6 @@ try:
                     logger.debug(t_end)
                     while time.time() < t_end:
                         leds.pulse_clk()
-                        
                    # print time.time()
                     logger.debug(time.time())
             State = 1
@@ -145,4 +144,4 @@ except KeyboardInterrupt:
     GPIO.cleanup()
     leds.blank(1)
 
-leds.blank(1)
+#leds.blank(1)
